@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f5f7f3" />
+  <title>HybridSweep · 航迹规划工作台</title>
+  <script type="module" crossorigin src="/assets/index-DSULp7nI.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-DV9721ig.css">
+</head>
+<body>
+  <svg class="icon-definitions" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></symbol>
+    <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V3m-5 5 5-5 5 5M4 15v5h16v-5"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v13m-5-5 5 5 5-5M4 16v4h16v-4"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="m8 5 11 7-11 7Z"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><path d="M8 5v14M16 5v14"/></symbol>
+    <symbol id="i-stop" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="1"/></symbol>
+    <symbol id="i-undo" viewBox="0 0 24 24"><path d="m8 4-5 5 5 5M3 9h10a7 7 0 0 1 0 14"/></symbol>
+    <symbol id="i-redo" viewBox="0 0 24 24"><path d="m16 4 5 5-5 5m5-5H11a7 7 0 0 0 0 14"/></symbol>
+    <symbol id="i-cursor" viewBox="0 0 24 24"><path d="m5 3 14 10-7 1-3 7Z"/></symbol>
+    <symbol id="i-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/></symbol>
+    <symbol id="i-rectangle" viewBox="0 0 24 24"><rect x="4" y="6" width="16" height="12" rx="1"/></symbol>
+    <symbol id="i-polygon" viewBox="0 0 24 24"><path d="m5 5 13-2 3 13-12 5-6-9Z"/><circle cx="5" cy="5" r="1"/><circle cx="21" cy="16" r="1"/></symbol>
+    <symbol id="i-hand" viewBox="0 0 24 24"><path d="M7 12V7a2 2 0 0 1 4 0V4a2 2 0 0 1 4 0v2a2 2 0 0 1 4 0v2a2 2 0 0 1 3 2v5a7 7 0 0 1-7 7h-2c-3 0-4-2-6-5l-3-4a2 2 0 0 1 3-2l3 3"/></symbol>
+    <symbol id="i-fit" viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5M8 12h8m-4-4v8"/></symbol>
+    <symbol id="i-camera" viewBox="0 0 24 24"><path d="M4 6h4l2-3h4l2 3h4v15H4Z"/><circle cx="12" cy="13" r="4"/></symbol>
+    <symbol id="i-plane" viewBox="0 0 24 24"><path d="m3 11 18-8-8 18-2-8Z"/></symbol>
+    <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 1v4m0 14v4M1 12h4m14 0h4"/></symbol>
+    <symbol id="i-layers" viewBox="0 0 24 24"><path d="m3 7 9-5 9 5-9 5Zm0 5 9 5 9-5M3 17l9 5 9-5"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18M9 6V3h6v3M5 6l1 15h12l1-15M10 10v7m4-7v7"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="13" rx="2"/><path d="M16 8V3H3v13h5"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L20 5"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 8a8 8 0 1 0 0 8m0-8V2m0 6h-6"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-10v1"/></symbol>
+    <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 7h5m4 0h7M4 17h9m4 0h3M9 3v8m4 2v8"/><circle cx="11" cy="7" r="2"/><circle cx="15" cy="17" r="2"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 3v17h17M7 14l4-5 4 3 5-7"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M6 18 18 6"/></symbol>
+  </defs></svg>
+
+  <div class="app-shell">
+    <header class="app-header">
+      <div class="brand"><span class="brand-mark"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M7 23V9h6v14h6V9h6v14"/><path d="m21 5 4 4 4-4"/></svg></span><div><strong>HybridSweep</strong><span>航迹规划工作台</span></div></div>
+      <span class="header-rule"></span>
+      <div class="scene-name-wrap"><span class="micro-label">当前场景</span><input id="scene-name" aria-label="场景名称" value="正在连接规划服务…" maxlength="80" disabled /></div>
+      <span id="scene-state" class="state-pill neutral">未规划</span>
+      <div class="header-actions"><button id="import-scene" class="button quiet"><svg class="icon"><use href="#i-upload"/></svg><span>导入</span></button><button id="export-scene" class="button quiet"><svg class="icon"><use href="#i-download"/></svg><span>保存场景</span></button><span class="header-rule short"></span><button id="plan-button" class="button primary" disabled><svg class="icon"><use href="#i-play"/></svg><span>生成航迹</span><kbd>Ctrl ↵</kbd></button><button id="cancel-plan" class="button danger" hidden>取消规划</button></div>
+    </header>
+
+    <div id="connection-error" class="connection-banner" hidden><svg class="icon"><use href="#i-info"/></svg><span></span><button id="retry-connection" class="text-button">重试连接</button></div>
+
+    <div class="workspace">
+      <aside class="configuration panel">
+        <div class="panel-eyebrow"><span>任务配置</span><span class="tiny-tag">LOCAL</span></div>
+        <nav class="configuration-tabs" aria-label="配置分类"><button class="active" data-panel="scene">场景</button><button data-panel="fleet">机队 <span id="fleet-count">—</span></button><button data-panel="obstacles">障碍物</button></nav>
+        <div id="configuration-body" class="panel-scroll"><div class="loading-copy"><span class="spinner"></span>读取场景配置</div></div>
+        <div class="panel-bottom"><span class="live-dot"></span><span>本地计算 · 米制坐标</span><button id="help-button" class="icon-button small" title="操作帮助" aria-label="操作帮助"><svg class="icon"><use href="#i-info"/></svg></button></div>
+      </aside>
+
+      <main class="main-stage">
+        <div class="stage-toolbar"><div class="view-tabs" role="tablist" aria-label="航迹视图"><button class="active" data-view="2d" role="tab" aria-selected="true"><svg class="icon"><use href="#i-target"/></svg>二维编辑</button><button data-view="3d" role="tab" aria-selected="false"><svg class="icon"><use href="#i-layers"/></svg>三维航迹</button><button data-view="altitude" role="tab" aria-selected="false"><svg class="icon"><use href="#i-chart"/></svg>高度剖面</button></div><div class="stage-toolbar-actions"><button id="view-settings-button" class="icon-button" title="图层显示" aria-label="图层显示" aria-expanded="false"><svg class="icon"><use href="#i-sliders"/></svg></button><button id="capture-button" class="icon-button" title="导出当前视图 PNG" aria-label="导出当前视图 PNG"><svg class="icon"><use href="#i-camera"/></svg></button></div>
+          <div id="view-settings" class="layer-popover" hidden><strong>显示图层</strong><label title="选中飞机净空；未选中时为默认净空"><input type="checkbox" data-display="showClearance" checked> 障碍净空</label><label title="在每条可见路径上标出全部输出航点"><input type="checkbox" data-display="showPoints"> 显示全部输出航点</label><label><input type="checkbox" data-display="showApproach" checked> 接近航迹</label><label><input type="checkbox" data-display="showSweep" checked> 扫掠航迹</label><label><input type="checkbox" data-display="showTurns" checked> 区外转弯与升降</label><div class="path-visibility-section"><div class="path-visibility-heading"><strong>无人机路径</strong><div><button id="show-all-paths" class="text-button" type="button">全部显示</button><button id="hide-all-paths" class="text-button" type="button">全部隐藏</button></div></div><div id="path-visibility-list" class="path-visibility-list" aria-label="各无人机路径显示"></div></div><p class="layer-note">三维障碍物：地面至2000m</p></div>
+        </div>
+        <div class="viewport-stack">
+          <div id="map-pane" class="viewport-pane"></div>
+          <div id="three-pane" class="viewport-pane" hidden></div>
+          <div id="altitude-pane" class="viewport-pane" hidden><canvas id="altitude-canvas" aria-label="各机高度随航程变化曲线"></canvas><div id="altitude-empty" class="canvas-empty"><svg class="icon"><use href="#i-chart"/></svg><strong>规划后的高度变化，将在这里展开</strong><span>区内目标高度 · 直线升降 · 本机高度转弯</span></div></div>
+          <div id="drawing-toolbar" class="drawing-toolbar" aria-label="二维编辑工具"><button class="active" data-tool="select" title="选择与编辑（V）" aria-label="选择与编辑"><svg class="icon"><use href="#i-cursor"/></svg></button><button data-tool="pan" title="平移（H 或按住空格）" aria-label="平移"><svg class="icon"><use href="#i-hand"/></svg></button><span></span><button data-tool="circle" title="绘制圆形障碍（C）" aria-label="绘制圆形障碍"><svg class="icon"><use href="#i-circle"/></svg></button><button data-tool="rectangle" title="绘制旋转矩形（R）" aria-label="绘制旋转矩形"><svg class="icon"><use href="#i-rectangle"/></svg></button><button data-tool="polygon" title="绘制多边形（P）" aria-label="绘制多边形"><svg class="icon"><use href="#i-polygon"/></svg></button><span></span><button id="undo-button" title="撤销（Ctrl+Z）" aria-label="撤销" disabled><svg class="icon"><use href="#i-undo"/></svg></button><button id="redo-button" title="重做（Ctrl+Shift+Z）" aria-label="重做" disabled><svg class="icon"><use href="#i-redo"/></svg></button></div>
+          <div id="viewport-caption" class="viewport-caption"><span class="live-dot"></span><span>平面任务空间</span><span class="caption-separator">/</span><span>XY · km</span></div>
+          <div id="stale-badge" class="stale-badge" hidden><span></span>配置已变更 · 当前航迹已过期</div>
+          <div id="draw-hint" class="draw-hint" hidden></div>
+          <div class="viewport-navigation"><button id="zoom-in" class="icon-button" title="放大" aria-label="放大"><svg class="icon"><use href="#i-plus"/></svg></button><button id="zoom-out" class="icon-button" title="缩小" aria-label="缩小"><svg class="icon"><use href="#i-minus"/></svg></button><span></span><button id="fit-view" class="icon-button" title="适应任务范围" aria-label="适应任务范围"><svg class="icon"><use href="#i-fit"/></svg></button></div>
+          <div id="planning-overlay" class="planning-overlay" hidden><div><span class="spinner"></span><strong id="planning-stage">正在规划</strong><span id="planning-progress">0 / 0</span></div><div class="progress-track"><span id="planning-progress-bar"></span></div></div>
+        </div>
+        <div class="viewport-status"><span id="pointer-coordinates">X — &nbsp; Y —</span><span id="editor-hint">滚轮缩放 · 空格平移 · 选择对象后拖动控制点</span><span class="north-indicator">↑ Y / 北</span></div>
+        <div class="playback-strip"><button id="play-button" class="icon-button play-control" title="播放任务" aria-label="播放任务" disabled><svg class="icon"><use href="#i-play"/></svg></button><button id="reset-playback" class="icon-button" title="回到起点" aria-label="回到起点" disabled><svg class="icon"><use href="#i-stop"/></svg></button><span id="playback-time" class="timecode">00:00</span><input id="time-slider" type="range" min="0" max="1" step="0.1" value="0" aria-label="任务播放时间" disabled><span id="playback-duration" class="timecode muted">00:00</span><select id="playback-speed" aria-label="播放倍率"><option value="1">1×</option><option value="5">5×</option><option value="20" selected>20×</option><option value="100">100×</option></select></div>
+      </main>
+
+      <aside class="inspector panel"><div class="inspector-heading"><div><span class="micro-label">对象属性</span><strong id="selection-title">任务概览</strong></div><button id="clear-selection" class="icon-button small" title="取消选择" aria-label="取消选择" hidden><svg class="icon"><use href="#i-close"/></svg></button></div><div id="inspector-body" class="panel-scroll"></div><div class="inspector-footer"><svg class="icon"><use href="#i-cursor"/></svg><span>画布选择 · 右侧精确调整</span></div></aside>
+    </div>
+
+    <section id="results-dock" class="results-dock"><div class="results-heading"><div class="results-title"><svg class="icon"><use href="#i-plane"/></svg><strong>规划结果</strong><span id="result-summary" class="muted">准备就绪后生成航迹</span></div><div class="results-actions"><span id="result-status"></span><button id="export-results" class="button compact" disabled><svg class="icon"><use href="#i-download"/></svg>导出结果</button><button id="toggle-results" class="icon-button small" title="收起结果面板" aria-label="收起结果面板"><svg class="icon rotate-up"><use href="#i-chevron"/></svg></button></div></div><div id="result-metrics" class="result-metrics" hidden></div><div class="results-table-wrap"><table class="results-table"><thead><tr><th>无人机</th><th>路径显示</th><th>状态</th><th>任务航程</th><th>飞行时间</th><th>航点 / 高度点</th><th title="参考接近与实际接入搜索扩展状态，不包含扫掠连接内部搜索">接近扩展</th><th>规划耗时</th><th>详情</th></tr></thead><tbody id="result-rows"><tr class="empty-row"><td colspan="9"><span class="empty-line-icon">↗</span>从一个场景开始，查看每架无人机的完整规划结果。</td></tr></tbody></table></div></section>
+    <footer class="app-footer"><span><span class="live-dot"></span><span id="footer-status">连接本地规划服务</span></span><span>Hybrid A* <span class="footer-plus">+</span> Dubins <span class="footer-divider">/</span> 覆盖与分层高度规划</span><span id="scene-statistics">—</span></footer>
+  </div>
+
+  <input id="scene-file" type="file" accept=".json,application/json" hidden>
+  <div id="toast-stack" class="toast-stack" aria-live="polite"></div>
+  <dialog id="random-dialog"><form id="random-form"><div class="dialog-heading"><div><span class="micro-label">可复现场景</span><h2>生成随机障碍物</h2></div><button type="button" class="icon-button" data-close-dialog aria-label="关闭"><svg class="icon"><use href="#i-close"/></svg></button></div><p>在世界边界内生成圆形障碍物，并避开任务区及无人机起点。相同种子和配置生成相同结果。</p><div class="form-grid"><label class="field"><span>随机种子</span><input name="seed" type="number" value="42" step="1" required></label><label class="field"><span>障碍物数量</span><input name="count" type="number" value="12" min="1" max="100" step="1" required></label><label class="field"><span>最小半径 <small>km</small></span><input name="minRadius" type="number" value="2" min="0.05" step="any" required></label><label class="field"><span>最大半径 <small>km</small></span><input name="maxRadius" type="number" value="5" min="0.05" step="any" required></label></div><label class="check-row"><input name="replace" type="checkbox" checked>替换现有障碍物</label><div class="dialog-actions"><button type="button" class="button" data-close-dialog>取消</button><button class="button primary" type="submit">生成障碍物</button></div></form></dialog>
+  <dialog id="export-dialog"><div class="dialog-heading"><div><span class="micro-label">规划快照</span><h2>导出规划结果</h2></div><button class="icon-button" data-close-dialog aria-label="关闭"><svg class="icon"><use href="#i-close"/></svg></button></div><p id="export-description">导出当前结果对应的场景快照及各机轨迹。</p><div class="export-options"><button class="export-option" data-export="json"><span class="file-type">JSON</span><div><strong>完整规划数据</strong><span>场景、航迹、真实航段与统计量</span></div><svg class="icon"><use href="#i-download"/></svg></button><button class="export-option" data-export="csv"><span class="file-type">CSV</span><div><strong>高度与时间轨迹</strong><span>各机坐标、高度、航向、时间与阶段</span></div><svg class="icon"><use href="#i-download"/></svg></button></div></dialog>
+  <dialog id="help-dialog"><div class="dialog-heading"><div><span class="micro-label">编辑与查看</span><h2>工作台操作</h2></div><button class="icon-button" data-close-dialog aria-label="关闭"><svg class="icon"><use href="#i-close"/></svg></button></div><div class="help-grid"><strong>选择与调整</strong><p>点击无人机、任务区或障碍物，在右侧编辑数值；拖动对象移动位置，拖动控制点修改大小、顶点或航向。</p><strong>绘制障碍</strong><p>圆形：点选圆心，移动确定半径后再次点击。矩形：点选两角，再移动确定旋转角并点击。多边形：连续点选顶点，点回起点、双击或按 Enter 闭合。</p><strong>视角与历史</strong><p>滚轮缩放，按住空格拖动平移；Shift 拖动按 500 m 或 15° 吸附。Ctrl+Z 撤销，Ctrl+Shift+Z 重做。Esc 取消绘制，Delete 删除当前对象。</p><strong>规划与播放</strong><p>修改场景后旧航迹保留并标记过期；视角和图层调整不影响规划状态。完成规划后可查看三维航迹、高度剖面，并按任务时间播放。通过结果表的“路径显示”或图层菜单分别显示、隐藏各机路径；勾选“显示全部输出航点”查看放大的航点标记。这些显示设置在各视图间同步，不影响参与规划的无人机。</p></div></dialog>
+</body>
+</html>
