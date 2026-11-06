@@ -65,15 +65,15 @@ python -B -m planner.web_server --open
 
 障碍物按平面禁入区域处理，不通过改变飞行高度越过。任务直线穿过障碍时沿用现有失败检查，不自动裁剪覆盖区域。按预计时间分配时以扫掠线长度除以各机速度平衡任务量，不保证所有飞机同时完成；时间回放不增加多机冲突检测。结果中的接近搜索扩展数量合计参考接近与实际接入，不包含扫掠连接内部搜索。
 
-前端源码位于`web/`。本机依赖集中保存在`D:\Node`，`web/node_modules`为指向共享依赖的目录联接；不要通过该联接安装依赖：
+前端源码位于`web/`。本机维护使用`D:\Node\bin\node.exe`（Node.js 24），直接读取`D:\Node\node_modules`中的共享依赖；项目内不创建`node_modules`目录、目录联接或符号链接。重新构建时，在项目根目录执行：
 
 ```powershell
-. D:\Node\Use-SharedNode.ps1 -ProjectPath "$PWD\web"
-Set-Location web
-node D:\Node\node_modules\vite\bin\vite.js build
+& D:\Node\bin\node.exe scripts/shared-node.mjs build
 ```
 
-也可运行`./scripts/start_web.ps1 -Rebuild`构建并启动，使用`-NoBrowser`仅启动服务。其他电脑按`web/package.json`和`web/pnpm-lock.yaml`准备前端依赖；仅运行已构建网页时只需Python依赖`scripts/requirements.txt`。
+也可运行`./scripts/start_web.ps1 -Rebuild -NoBrowser`构建并启动服务而不打开浏览器。开发服务使用`& D:\Node\bin\node.exe scripts/shared-node.mjs dev`。维护入口在构建、开发及测试前核对共享Vite和Three.js版本是否与`web/package.json`的固定版本一致，版本不符时停止。Vite通过现有别名直接解析共享Three.js及addons，缓存位于`D:\Node\cache\hybrid-sweep-planner\vite`；使用`native`配置加载方式避免在项目内生成临时`node_modules`。选择`D:\Node\environments`中的专用共享环境时，可通过`SHARED_NODE_MODULES`指定其依赖路径。
+
+其他电脑按`web/package.json`和`web/pnpm-lock.yaml`在共享环境中准备相同版本的依赖；仅运行已构建网页时只需Python依赖`scripts/requirements.txt`。前端维护直接调用共享工具入口，不在项目内执行依赖安装或使用会自动安装依赖的命令。
 
 网页相关模块为`planner/mission_service.py`（独立场景、逐机参数、结果及错误映射）和`planner/web_server.py`（网页、异步任务、取消及进度接口）。两者不修改命令行任务的全局配置。
 
@@ -83,6 +83,13 @@ node D:\Node\node_modules\vite\bin\vite.js build
 
 ```powershell
 python -B -m unittest discover -s tests -v
+& D:\Node\bin\node.exe scripts/shared-node.mjs test
+```
+
+前端测试通过项目维护入口预加载Three.js解析规则，直接使用共享包的ESM导出，不依赖`NODE_PATH`或`D:\node_modules`祖先入口。也可在`web/`内通过共享环境的`npm run build`、`npm run dev`、`npm test`调用相同入口。构建及测试后可执行以下检查，正常应无输出：
+
+```powershell
+Get-ChildItem -LiteralPath . -Directory -Force -Recurse -Filter node_modules
 ```
 
 从工作区根目录也可运行：

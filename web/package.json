@@ -4,8 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "vite build",
-    "dev": "vite --host 127.0.0.1"
+    "build": "node ../scripts/shared-node.mjs build",
+    "dev": "node ../scripts/shared-node.mjs dev",
+    "test": "node ../scripts/shared-node.mjs test"
   },
   "dependencies": {
     "three": "0.186.1"
